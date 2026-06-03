@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Gabby Shaffer"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: CV.qmd
+        text: CV
+      - href: https://hdl.handle.net/1794/32471
+        text: Thesis
+        
+format:
+  html:
+    theme:
+      - lux
+    css: styles.css
+    toc: true
+
+editor: visual
+

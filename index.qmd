@@ -1,0 +1,37 @@
+---
+title: "GABBY SHAFFER"
+about:
+  template: solana
+  image: Image.jpg
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/gshaffer22
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/gabby-shaffer-9bb4411bb/
+---
+
+Incoming Post-Grad \@ University of Edinburgh MSc in Geographical Information Science and Earth Observation
+
+## ABOUT
+
+I graduated summa cum laude from the University of Oregon with two Bachelors of Science in Spatial Data Science & Techology and Anthropology, with a minor in Food Studies. I will be a post-graduate student at the University of Edinburgh for the 2026-27 year, while pursuing my Master's of Science in Geographical Information Science and Earth Observation.
+
+While at the University of Oregon, I was a student in the Clark Honors College and completed and defended a thesis titled: Pottery from Prasat Baset, Cambodia: A Study of Earthenware Ceramic Vessels and Rim Forms. I was able to travel to Cambodia as part of Project P'Teah, directed by archaeologists from the University of Oregon and University of Hawai'i at Mānoa. I have experience in multiple archaeology labs at the UO, including the Southeast Asian Archaeology Lab, Archaeobotany Lab, and the Island and Coastal Archaeology Lab. My most recent project was beginning starch analysis on pottery from Prasat Baset, dating to approx. 500-1400 CE.
+
+I'm interested in climate change, food security, and understanding populations around the world. When not in school, I enjoy travelling, hiking, reading, and spending time with my polydactyl cat, Bean.
+
+## EDUCATION
+
+University of Oregon \| Eugene, OR B.S in Spatial Data Science & Technology \| Sept 2022 - June 2026
+
+University of Oregon \| Eugene, OR B.S in Anthropology \| Sept 2022 - June 2026
+
+## EXPERIENCE
+
+WSP \| Archaeology Intern \| June 2025 - August 2025
+
+Southeast Asian Archaeology Lab \| Research Volunteer \| June 2024 - June 2026
+
+------------------------------------------------------------------------
