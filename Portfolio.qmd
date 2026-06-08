@@ -1,0 +1,76 @@
+---
+title: "Cost of Living in San Francisco "
+about: 
+  template: solana
+---
+
+```{r}
+#| message: false
+#| code-fold: true
+
+library(tidycensus) 
+library(sf)
+library(tidyverse)
+library(tigris)
+library(patchwork)
+library(mapview)
+
+```
+
+```{r}
+#| message: false
+#| code-fold: true
+
+sf_var <- c(
+  med_gross_rent = "B25064_001",
+  med_income = "B19013_001",
+  med_housing_cost = "B25105_001")
+
+```
+
+```{r}
+#| message: false
+#| code-fold: true
+
+# SF data
+sf_data <- get_acs(
+  geography = "tract", 
+  variables = sf_var,
+  state = "CA", 
+  county = "San Francisco", 
+  output = "wide",
+  geometry = TRUE, 
+  year = 2020
+) %>%
+  st_transform(7131)|> 
+  filter(!GEOID %in% c(
+    "06075980401"  # filtering out Farallon Islands
+  ))
+
+
+```
+
+```{r}
+#| message: false
+#| code-fold: true
+
+# viewing with mapview 
+mapview(sf_data)
+```
+
+```{r}
+#| message: false
+#| code-fold: true
+
+# mapping median rent estimate 
+med_rent_map <- ggplot(sf_data, aes(fill = med_gross_rentE)) +
+  geom_sf(color = NA) +
+  scale_fill_viridis_c(option = "mako",
+                       labels = scales::label_dollar()) +
+  theme(text = element_text(family = "Verdana")) +
+  theme_void() +
+  labs(fill = "Median Household Income ")
+
+med_rent_map
+
+```
