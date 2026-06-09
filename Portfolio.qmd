@@ -67,7 +67,7 @@ sf_data <- get_acs(
 
 ```
 
-### UNDERSTANDING RENT 
+### UNDERSTANDING RENT
 
 This figure shows the median gross rent in San Francisco. Overall, rent in San Francisco is high, but this figure indicates the range across the central city.
 
@@ -93,7 +93,7 @@ med_rent_map
 
 ```
 
-### STATISTICAL ANALYSIS 
+### STATISTICAL ANALYSIS
 
 Using the Local Gi\*, we are able to understand the clusters of high and low rent in the region.
 
@@ -161,7 +161,7 @@ tm_shape(sf_data) +
 
 ```
 
-### UNDERSTANDING VACANCY 
+### UNDERSTANDING VACANCY
 
 Now that we have run visualizations and statistical tests to understand rent in San Francisco, I wanted to compare this with the vacancy rate of each census tract. This is done by acquiring the vacant housing and total housing units from the 2024 5-Year ACS.
 
@@ -229,7 +229,7 @@ The final figure of this project is an interactive map with the vacancy rate, re
 ```{r}
 #| message: false
 #| code-fold: true
-#| fig-height: 8
+#| fig-height: 10
 
 
 # mapping vacancy rate
