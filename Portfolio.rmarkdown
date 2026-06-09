@@ -270,3 +270,4 @@ combined_map <- tm_shape(sf_data) +
 combined_map
 
 ```
+
