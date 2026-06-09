@@ -112,7 +112,6 @@ sf_data$localG <- as.numeric(localG(sf_data$med_gross_rentE, localg_weights))
 ```{r}
 #| message: false
 #| code-fold: true
-#| results: hide
 
 # Local Gi* Statistic plot
 tmap_mode("view")
@@ -134,7 +133,6 @@ tm_shape(sf_data) +
 ```{r}
 #| message: false
 #| code-fold: true
-#| results: hide
 
 
 # Map of Local Gi scores w/spatial clusters highlighted
@@ -193,7 +191,9 @@ recent_vacancy <- get_acs(
 sf_vacancy_rate <- recent_vacancy %>%
  mutate(vacancy_rate = vacantE/totalE)
  
+```
 
+```{r}
 # mapping vacancy rate
 tmap_mode("view")
 
