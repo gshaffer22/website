@@ -108,6 +108,7 @@ sf_data$localG <- as.numeric(localG(sf_data$med_gross_rentE, localg_weights))
 ```{r}
 #| message: false
 #| code-fold: true
+#| results: hide
 
 # Local Gi* Statistic plot
 tmap_mode("view")
@@ -129,6 +130,8 @@ tm_shape(sf_data) +
 ```{r}
 #| message: false
 #| code-fold: true
+#| results: hide
+
 
 # Map of Local Gi scores w/spatial clusters highlighted
 sf_data <- sf_data %>%
@@ -158,6 +161,7 @@ tm_shape(sf_data) +
 ```{r}
 #| message: false
 #| code-fold: true
+#| results: hide
 
 vacancy_vars <- c(vacant = "B25004_001", 
                   total = "B25002_001")
