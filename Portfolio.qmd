@@ -194,6 +194,9 @@ sf_vacancy_rate <- recent_vacancy %>%
 ```
 
 ```{r}
+#| message: false
+#| code-fold: true
+
 # mapping vacancy rate
 tmap_mode("view")
 
