@@ -79,6 +79,10 @@ med_rent_map
 ```
 
 ```{r}
+#| message: false
+#| code-fold: true
+#| results: hide
+
 # mapping clusters of high low and high rent in San Francisco 
 # weights matrix
 
