@@ -13,7 +13,7 @@ website:
       - href: https://hdl.handle.net/1794/32471
         text: Thesis
       - href: Portfolio.qmd
-        text: Rental Cost & Vacancy in SF 
+        text: Rental Market in SF 
         
 format:
   html:

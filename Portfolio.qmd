@@ -4,6 +4,14 @@ about:
   template: solana
 ---
 
+### USING R TO UNDERSTAND COST OF LIVING IN SAN FRANCISCO
+
+The goal of this project is to understand the rental market in San Francisco, California. This project uses the 2020 5-Year American Community Survey (ACS) and the 2024 5-Year ACS. This project uses tidycensus, tidyverse, tmap, and other R libraries to analyze the ACS data.
+
+### GETTING THE LIBRARIES & DATA
+
+The first step of this analysis is to install the necessary libraries to acquire the San Francisco data.
+
 ```{r}
 #| message: false
 #| code-fold: true
@@ -11,8 +19,6 @@ about:
 library(tidycensus) 
 library(sf)
 library(tidyverse)
-library(tigris)
-library(patchwork)
 library(spdep)
 library(tmap)
 library(mapview)
@@ -23,6 +29,7 @@ library(mapview)
 #| message: false
 #| code-fold: true
 
+# setting the variables 
 sf_var <- c(
   med_gross_rent = "B25064_001",
   med_income = "B19013_001",
@@ -60,6 +67,10 @@ sf_data <- get_acs(
 
 ```
 
+### UNDERSTANDING RENT 
+
+This figure shows the median gross rent in San Francisco. Overall, rent in San Francisco is high, but this figure indicates the range across the central city.
+
 ```{r}
 #| message: false
 #| code-fold: true
@@ -67,16 +78,24 @@ sf_data <- get_acs(
 # mapping median rent estimate 
 med_rent_map <- ggplot(sf_data, aes(fill = med_gross_rentE)) +
   geom_sf(color = NA) +
-  scale_fill_viridis_c(option = "mako",
-                       labels = scales::label_dollar()) +
-  theme(text = element_text(family = "Verdana")) +
+  scale_fill_distiller(palette = "PuBuGn", 
+                     direction = 1,
+                     labels = scales::label_dollar()) +
   theme_void() +
-  labs(fill = "Median Gross Rent in San Francisco, CA",
-       caption = "Source: 2020 5-Year ACS, US Census Bureau")
+  labs(title = "Median Gross Rent in San Francisco, CA",
+       fill = "Median Gross Rent",
+       caption = "Source: 2020 5-Year ACS, US Census Bureau") +
+  theme(text = element_text(family = ""), 
+        plot.title = element_text(hjust = 0.5)) 
+
 
 med_rent_map
 
 ```
+
+### STATISTICAL ANALYSIS 
+
+Using the Local Gi\*, we are able to understand the clusters of high and low rent in the region.
 
 ```{r}
 #| message: false
@@ -106,33 +125,15 @@ localg_weights <- nb2listw(include.self(neighbors))
 
 sf_data$localG <- as.numeric(localG(sf_data$med_gross_rentE, localg_weights))
 
-
 ```
+
+This map highlights statistically significant clusters of high and low rent. The red, or high values, indicate tracts with high median gross rent surrounded by other tracts with high median gross rent. Low values are shown in blue, which indicate tracts with low median gross rent surrounded by other low median gross rent tracts.
 
 ```{r}
 #| message: false
 #| code-fold: true
+#| fig-height: 6
 
-# Local Gi* Statistic plot
-tmap_mode("view")
-
-tm_shape(sf_data) +
-  tm_polygons(
-    fill = "localG",
-    fill.scale = tm_scale_continuous(
-      values = "brewer.rd_yl_bu"
-    ),
-    fill.legend = tm_legend(title = "Local Gi* Statistic"),
-    col = NA
-  ) +
-  tm_basemap("CartoDB.Positron") +
-  tm_title("Local Gi* Statistic in San Francisco, CA")
-
-```
-
-```{r}
-#| message: false
-#| code-fold: true
 
 
 # Map of Local Gi scores w/spatial clusters highlighted
@@ -159,6 +160,10 @@ tm_shape(sf_data) +
   tm_title("Areas with High & Low Rent Clusters in San Francisco, CA")
 
 ```
+
+### UNDERSTANDING VACANCY 
+
+Now that we have run visualizations and statistical tests to understand rent in San Francisco, I wanted to compare this with the vacancy rate of each census tract. This is done by acquiring the vacant housing and total housing units from the 2024 5-Year ACS.
 
 ```{r}
 #| message: false
@@ -193,24 +198,75 @@ sf_vacancy_rate <- recent_vacancy %>%
  
 ```
 
+This figure shows the vacancy rate across San Francisco.
+
 ```{r}
 #| message: false
 #| code-fold: true
 
+
+# mapping vacancy rate
+vacancy_map <- ggplot(sf_vacancy_rate, aes(fill = vacancy_rate)) +
+  geom_sf(color = NA) +
+  scale_fill_distiller(palette = "BuPu", 
+                     direction = 1) +
+  theme_void() +
+  labs(title = "Vacancy Rate in San Francisco, CA",
+        fill = "Vacancy Rate",
+       caption = "Source: 2024 5-Year ACS, US Census Bureau") + 
+  theme(text = element_text(family = ""), 
+        plot.title = element_text(hjust = 0.5)) 
+
+
+vacancy_map
+
+```
+
+### PUTTING IT ALL TOGETHER
+
+The final figure of this project is an interactive map with the vacancy rate, rental clusters, and rental cost. While this is not the full picture of the rental market in San Francisco, it shows cost, availability, and statistically significant regions of high and low rent across the city. The interactive map allows users to have vacancy rate or median gross rent shown, as well as the clusters of high and low median gross rent across the city.
+
+```{r}
+#| message: false
+#| code-fold: true
+#| fig-height: 8
+
+
 # mapping vacancy rate
 tmap_mode("view")
 
-vacancy_map <- tm_shape(sf_vacancy_rate |> filter(!is.na(vacancy_rate))) +
+combined_map <- tm_shape(sf_data) +
+  tm_polygons(
+    fill = "med_gross_rentE",
+    fill.scale = tm_scale_continuous(
+      values = "PuBuGn",
+      label.format = list(prefix = "$", big.mark = ",")
+    ),
+    fill.legend = tm_legend(title = "Median Gross Rent",
+                            reverse = TRUE),
+                             col = "grey") +
+  tm_shape(sf_vacancy_rate |> filter(!is.na(vacancy_rate))) +
   tm_polygons(
     fill = "vacancy_rate",
     fill.scale = tm_scale_continuous(
-      values = "brewer.gn_bu"
+      values = "brewer.BuPu"
     ),
-  fill.legend = tm_legend(title = "Vacancy Rate", reverse = TRUE),
-    col = NA
+    fill.legend = tm_legend(title = "Vacancy Rate", reverse = TRUE),
+    col = "grey"
   ) +
+  tm_shape(sf_data |> filter(hotspot != "Not significant")) +
+  tm_borders(
+    col = "hotspot",
+    col.scale = tm_scale_categorical(
+      values = c("High cluster" = "red", "Low cluster" = "blue")
+    ),
+    col.legend = tm_legend(title = "Rental Clusters"),
+    lwd = 2
+  ) + 
   tm_basemap("CartoDB.Positron") +
   tm_title("Vacant Housing Units in San Francisco, CA")
 
-vacancy_map
+  
+combined_map
+
 ```
