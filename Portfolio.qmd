@@ -229,7 +229,7 @@ The final figure of this project is an interactive map with the vacancy rate, re
 ```{r}
 #| message: false
 #| code-fold: true
-#| fig-height: 12
+#| fig-height: 10
 
 
 # mapping vacancy rate
